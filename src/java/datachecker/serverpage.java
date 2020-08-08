@@ -30,6 +30,8 @@ public class serverpage extends HttpServlet {
             throws ServletException, IOException {
         String data = request.getParameter("finalsubmit");
         ServletContext useremail = request.getSession().getServletContext();
+        ServletContext type = request.getSession().getServletContext();
+
         if (data.equals("registration")) {
             String radioselect = request.getParameter("radioselect");
             String firstname = request.getParameter("firstname");
@@ -76,6 +78,7 @@ public class serverpage extends HttpServlet {
                     }
                     if (pass.equals(check_pass)) {
                         useremail.setAttribute("user_email", uname);
+                        type.setAttribute("type", radioselect);
                         response.sendRedirect(request.getContextPath() + "/farmerpage.jsp");
                     } else {
                         PrintWriter pw = response.getWriter();
@@ -95,7 +98,10 @@ public class serverpage extends HttpServlet {
                     while (rs.next()) {
                         check_pass = rs.getString("password");
                     }
-                    if (pass.equals(check_pass)) {
+                    if (pass.equals(check_pass)) {                     
+                        useremail.setAttribute("user_email", uname);
+                        type.setAttribute("type", radioselect);
+
                         response.sendRedirect(request.getContextPath() + "/buyur.jsp");
                     } else {
                         PrintWriter pw = response.getWriter();
@@ -136,14 +142,7 @@ public class serverpage extends HttpServlet {
         }
 
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try{
-            
-        }
-        catch (Exception e){
-            System.out.print(e);
-        }
+   
     }
 
-}
+
